@@ -244,25 +244,27 @@ public class DataSourceServiceImpl implements DataSourceService {
                 sql = "SELECT table_name,column_name FROM information_schema.columns where table_schema='"+service+"' order by table_name asc,column_name asc ";
                 break;
             case "sqlserver":
-//                className = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-//                url = "jdbc:" + type.toLowerCase() + "://" + host + ":" + port + ";" + "DatabaseName=" + service;
-//                sql = "SELECT table_name,column_name FROM information_schema.columns where table_schema='"+service+"' order by table_name asc,column_name asc ";
+                className = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+                url = "jdbc:" + type.toLowerCase() + "://" + host + ":" + port + ";" + "DatabaseName=" + service;
+               sql = "SELECT table_name,column_name FROM information_schema.columns where table_schema='"+service+"' order by table_name asc,column_name asc ";
                 break;
             case "oracle":
-//                className = "oracle.jdbc.driver.OracleDriver";
-//                url = "jdbc:" + type.toLowerCase() + ":thin:@" + host + ":" + port + ":" + service;
-//                sql = "SELECT table_name,column_name FROM user_table_columns where table_schema='"+service+"' order by table_name asc,column_name asc ";
+                className = "oracle.jdbc.driver.OracleDriver";
+                url = "jdbc:" + type.toLowerCase() + ":thin:@" + host + ":" + port + ":" + service;
+               sql = "SELECT table_name,column_name FROM user_table_columns where table_schema='"+service+"' order by table_name asc,column_name asc ";
                 break;
             case "kingbase":
-//                className = "com.kingbase.Driver";
-//                url = "jdbc:" + type.toLowerCase() + "://" + host + ":" + port + "/" + service;
-//                sql = "SELECT table_name,column_name FROM information_schema.columns where table_schema='"+service+"' order by table_name asc,column_name asc ";
+                className = "com.kingbase.Driver";
+                url = "jdbc:" + type.toLowerCase() + "://" + host + ":" + port + "/" + service;
+                sql = "SELECT table_name,column_name FROM information_schema.columns where table_schema='"+service+"' order by table_name asc,column_name asc ";
                 break;
             case "dm":
-//                className = "dm.jdbc.driver.DmDriver";
-//                url = "jdbc:" + type.toLowerCase() + "://" + host + ":" + port + "/" + service;
-//                sql = "SELECT table_name,column_name FROM information_schema.columns where table_schema='"+service+"' order by table_name asc,column_name asc ";
+                className = "dm.jdbc.driver.DmDriver";
+                url = "jdbc:" + type.toLowerCase() + "://" + host + ":" + port + "/" + service;
+                sql = "SELECT table_name,column_name FROM information_schema.columns where table_schema='"+service+"' order by table_name asc,column_name asc ";
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + type.toLowerCase());
         }
 
         map.put("className",className);
