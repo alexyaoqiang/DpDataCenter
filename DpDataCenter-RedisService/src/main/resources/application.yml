@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: DpDataCenter-RedisService
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:9001 # nacos 地址
+    sentinel:
+      transport:
+        dashboard: localhost:9002 # sentinel 控制台地址
+  redis:
+    database: 5
+    host: 172.19.139.247
+    port: 6379
+    password: redis123
+    timeout: 10000
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 10
+        min-idle: 0
+
+# Feign开启sentinel服务
+feign:
+  sentinel:
+    enabled: true
+
+server:
+  port: 9013
+# 日志路径
+logging:
+  file:
+    path: ./logs
+  filenames: CONSOLE,CUSTOM,ERROR,INFO,WARN  #日志输出位置与级别旋转（自定义）
+
+

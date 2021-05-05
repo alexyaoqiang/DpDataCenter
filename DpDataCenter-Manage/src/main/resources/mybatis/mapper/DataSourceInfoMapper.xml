@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wiscom.mapper.DataSourceInfoMapper">
+    <!-- 给 dv_in_out_store_house表中的in_or_out起别名 -->
+    <!-- <resultMap id="StoreHouseMap" type="com.wiscom.bean.StoreHouseBean">
+        <result column="inorout" jdbcType="INT" property="in_or_out"></result> </resultMap> -->
+
+	<select id="getDataServiceNotifyInfo"   resultType="com.wiscom.model.dppz.DataServiceNotify">
+		SELECT
+		 code,
+		 "dsUpdate" ,
+		 "intfcUpdate",
+		 "bindUpdate"
+		FROM dppz.data_service_notify
+	</select>
+
+	<select id="getAllDataSourceInfo"   resultType="com.wiscom.model.dppz.DataSource">
+		SELECT
+		 *
+		FROM dppz.data_source
+		WHERE dppz.data_source."isUsed" = 't'
+		ORDER BY "updatedTime" DESC
+	</select>
+
+	<select id="getAllDataExtractInfo"   resultType="com.wiscom.model.dppz.DataExtract">
+		SELECT DISTINCT
+		 de.*
+		FROM dppz.data_extract de LEFT JOIN dppz.data_source ds ON ds."isUsed" =  de."isUsed"
+		WHERE ds."isUsed" = 't'
+		AND de."dsId" = ds."id"
+		ORDER BY "updatedTime" DESC
+	</select>
+
+	<!--查询data_bind_conf表中处于used状态的记录（其关联的数据源和坐标也需要处于used状态）-->
+	<select id="getAllDataBindConfInfo"   resultType="com.wiscom.model.dppz.DataBindConf">
+		SELECT
+		db."sceneId",
+		db."componentId",
+		db."groupIdx" as groupIndex,
+		db."intfcId",
+		db."intfcParam",
+		db."isUsed",
+		db."createdBy",
+		db."createdTime",
+		db."updatedBy",
+		db."componentCode",
+		db."updatedTime" as updateTime
+		FROM dppz.data_bind_conf db
+		WHERE db."isUsed" = 't'
+		AND db."intfcId" in (select de."id" from dppz.data_extract de where de."isUsed"='t' and de."dsId" in (select ds."id" from dppz.data_source ds where ds."isUsed"='t'))
+		ORDER BY db."updatedTime" DESC
+	</select>
+
+	<select id="getDataBindConfInfoByIntfcId"  parameterType="Long" resultType="com.wiscom.model.dppz.DataBindConf">
+		SELECT
+		"sceneId",
+		"componentId",
+		"groupIdx" as groupIndex,
+		"intfcId",
+		"intfcParam",
+		"isUsed",
+		"createdBy",
+		"createdTime",
+		"updatedBy",
+		"updatedTime" as updateTime
+		FROM dppz.data_bind_conf
+		WHERE dppz.data_bind_conf."intfcId" =  #{intfcId}
+		AND dppz.data_bind_conf."isUsed" = 't'
+	</select>
+
+
+	<!-- 通过数据源id获取数据源详细信息 -->
+	<select id="getDataSourceInfoById"   parameterType="java.lang.Long" resultType="com.wiscom.model.dppz.DataSource">
+		SELECT
+		 *
+		FROM dppz.data_source
+		WHERE dppz.data_source.id = #{value}
+	</select>
+
+
+</mapper>

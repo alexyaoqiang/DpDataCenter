@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: dpDataCenter-excelCollection
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.19.139.247:9001
+    # sentinel 控制台地址
+    sentinel:
+      transport:
+        dashboard: localhost:9002
+# Feign开启sentinel服务
+feign:
+  sentinel:
+    enabled: true
+server:
+  port: 9015
+# 日志路径
+logging: 
+  path: logs
+
+

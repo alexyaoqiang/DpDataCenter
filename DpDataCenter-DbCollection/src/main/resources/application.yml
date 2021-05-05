@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: DpDataCenter-DbCollection
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://172.19.139.247:9001
+    # sentinel 控制台地址
+    sentinel:
+      transport:
+        dashboard: localhost:9002
+# Feign开启sentinel服务
+feign:
+  sentinel:
+    enabled: true
+server:
+  port: 9012
+# 日志路径
+logging:
+  file:
+    path: ./logs
+  filenames: CONSOLE,CUSTOM,ERROR,INFO,WARN  #日志输出位置与级别旋转（自定义）
+
+

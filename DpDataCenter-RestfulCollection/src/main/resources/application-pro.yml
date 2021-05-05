@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: DpDataCenter-RestfulCollection
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://172.19.139.247:9001
+#    sentinel:
+#      transport:
+#        dashboard: http://10.161.80.84:6810
+# Feign开启sentinel服务
+#feign:
+#  sentinel:
+#    enabled: true
+server:
+  port: 9014
+# 日志路径
+logging:
+  file:
+    path: ./logs
+
+

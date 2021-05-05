@@ -1,0 +1,74 @@
+# 端口号
+server:
+  port: 9011
+
+spring:
+  application:
+    name: DpDataCenter-Manage  # 程序名
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:9001  #nacos注册中心地址
+    sentinel:
+      transport:
+        dashboard: localhost:9002 #sentinel控制台地址
+  datasource:  #postgresql数据库连接参数
+    className: org.postgresql.Driver
+    url: jdbc:postgresql://172.18.137.233:5432/dppz?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: wiscom
+    password: wiscom@123
+    max-idle: 20
+    max-wait: 1000
+    min-idle: 5
+    initial-size: 5
+
+# Feign开启sentinel服务
+feign:
+  sentinel:
+    enabled: true
+  hystrix:
+    enabled: true
+
+#hystrix:
+#  command:
+#    default:
+#      execute:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 3000
+#  serverMethod:
+#    execution:
+#      isolation:
+#        thread:
+#          timeoutInMilliseconds: 3000
+
+
+#ribbon（fegin底层使用）
+ribbon:
+  ConnectTimeout: 5000   #最大连接时间，超时进入入hystrix
+  ReadTimeout: 5000  #最大等待时间，超时进入入hystrix
+
+
+#mybatis
+mybatis:
+  config-location:
+    classpath:mybatis/mybatis-config.xml
+  mapper-locations:
+    classpath:mybatis/mapper/*.xml
+
+
+# logback
+logging:
+  file:
+    path: ./logs   #日志路径
+  filenames: CONSOLE,CUSTOM,ERROR,INFO,WARN  #日志输出位置与级别旋转（自定义）
+
+
+# 线程数计算参数（自定义）
+thread-num:
+  item: 10  #每个线程的采集项数（执行的指标数）
+  thread: 50  #每个数据源的生成的最大线程数，超过这一限制，则增加采集项数
+
+
+
+

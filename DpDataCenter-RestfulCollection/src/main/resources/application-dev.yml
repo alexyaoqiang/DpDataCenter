@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: DpDataCenter-RestfulCollection
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+#    sentinel:
+#      transport:
+#        dashboard: localhost:6810
+# Feign开启sentinel服务
+feign:
+  sentinel:
+    enabled: true
+server:
+  port: 6815
+# 日志路径
+logging:
+  file:
+    path: ./logs
+
+
